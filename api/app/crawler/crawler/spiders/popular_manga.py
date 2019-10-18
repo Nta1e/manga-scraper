@@ -1,22 +1,30 @@
 import scrapy
-
-from ....models import Manga
+from scrapy.selector import Selector
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 class PopularMangaSpider(scrapy.Spider):
     name = "popular_manga"
 
     start_urls = [
-        "https://www.mangareader.net"
+        "https://mangarock.com"
     ]
     BASE_URL = "https://www.mangareader.net"
 
+    def __init__(self):
+        self.option = Options()
+        self.option.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=self.option)
+
     def parse(self, response):
-        names = response.css('.popularitemcaption::text').extract()
-        links = response.xpath('//*[@id="popularlist"]/ol/li/div/b/a/@href').extract()
-        for link in links:
-            url = self.BASE_URL + link
-            yield scrapy.Request(url=url, callback=self.parse_page)
+        self.driver.get(response.url)
+        selector = Selector(text=self.driver.page_source)
+        lis = []
+        popular_elements = selector.xpath("//*[@data-test='most_popular']/div[2]/div[contains(@class,'_1Ndy6 _1BkZ9')]")
+        for element in popular_elements:
+            lis.append(element)
+        import pdb; pdb.set_trace()
 
     def parse_page(self, response):
         image = response.xpath('//*[@id="mangaimg"]/img/@src').extract()[0]
