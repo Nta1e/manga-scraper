@@ -55,7 +55,7 @@ class PopularMangaSpider(scrapy.Spider):
         for detail, chapter in zip(chapter_details[:10], chapters[:10]):
             yield scrapy.Request(url=self.BASE_URL+chapter, callback=self.parse_chapter, meta={"detail": detail.split(":")[0][-9:], "name": manga_name})
 
-    def parse_chapters(self, response):
+    def parse_chapter(self, response):
         self.driver.get(response.url)
         selector = Selector(text=self.driver.page_source)
         i = 1
