@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Define here the models for your crawler middleware
+# Define here the models for your spid middleware
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
@@ -10,7 +10,7 @@ from scrapy import signals
 
 class CrawlerSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
-    # scrapy acts as if the crawler middleware does not modify the
+    # scrapy acts as if the spid middleware does not modify the
     # passed objects.
 
     @classmethod
@@ -21,8 +21,8 @@ class CrawlerSpiderMiddleware(object):
         return s
 
     def process_spider_input(self, response, spider):
-        # Called for each response that goes through the crawler
-        # middleware and into the crawler.
+        # Called for each response that goes through the spid
+        # middleware and into the spid.
 
         # Should return None or raise an exception.
         return None
@@ -36,15 +36,15 @@ class CrawlerSpiderMiddleware(object):
             yield i
 
     def process_spider_exception(self, response, exception, spider):
-        # Called when a crawler or process_spider_input() method
-        # (from other crawler middleware) raises an exception.
+        # Called when a spid or process_spider_input() method
+        # (from other spid middleware) raises an exception.
 
         # Should return either None or an iterable of Request, dict
         # or Item objects.
         pass
 
     def process_start_requests(self, start_requests, spider):
-        # Called with the start requests of the crawler, and works
+        # Called with the start requests of the spid, and works
         # similarly to the process_spider_output() method, except
         # that it doesn’t have a response associated.
 

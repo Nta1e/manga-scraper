@@ -17,3 +17,4 @@ class Chapters(models.Model):
 class Pages(models.Model):
     page_number = models.IntegerField()
     chapter = models.ForeignKey(Chapters, on_delete=models.CASCADE)
+    image = models.URLField()
